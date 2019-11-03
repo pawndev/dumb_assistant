@@ -1,0 +1,9 @@
+﻿Hello
+What time is it
+Wake up
+Show Commands
+Unshow Commands
+Stop listening
+Stop talking
+Test
+Kill yourself

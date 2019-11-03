@@ -1,0 +1,35 @@
+﻿<Window x:Class="speech_to_binding.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:speech_to_binding"
+        mc:Ignorable="d"
+        Background="#2D2D30"
+        Title="Assistant" Height="450" Width="800">
+    <Grid x:Name="mainGrid">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="Auto" />
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+        <TextBlock Grid.Column="0" Name="lastCommand" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="34">
+            Hello, WPF!
+        </TextBlock>
+        <GridSplitter Grid.Column="1" Width="5" HorizontalAlignment="Stretch" Name="splitter" ResizeBehavior="PreviousAndNext"/>
+        <ListBox Background="#1E1E1E" Name="commandList" Grid.Column="2" Foreground="#FFEAE8E8" />
+        <!--<<ListBox.Resources Background="#1E1E1E">
+                <Style TargetType="ListBoxItem">
+                    <Setter Property="Background" Value="AntiqueWhite" />
+                </Style>
+            </ListBox.Resources>
+            ItemsControl ItemsSource="{Binding commandListItems}">
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate>
+                        <TextBlock Text="{Binding}"/>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
+        </ListBox>-->
+    </Grid>
+</Window>
