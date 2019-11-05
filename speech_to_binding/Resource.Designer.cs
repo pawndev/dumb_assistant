@@ -89,5 +89,15 @@ namespace speech_to_binding {
                 return ((System.Drawing.Icon)(obj));
             }
         }
+        
+        /// <summary>
+        ///   Recherche une ressource localisée de type System.Byte[].
+        /// </summary>
+        public static byte[] sample_config {
+            get {
+                object obj = ResourceManager.GetObject("sample_config", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
     }
 }

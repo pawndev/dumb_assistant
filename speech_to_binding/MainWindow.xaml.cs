@@ -20,6 +20,8 @@ using System.Windows.Forms;
 using System.Windows.Threading;
 using System.Globalization;
 using System.Drawing;
+using speech_to_binding.Services;
+using speech_to_binding.Models;
 
 namespace speech_to_binding
 {
@@ -35,7 +37,8 @@ namespace speech_to_binding
         private Choices _listenerChoices;
         private GrammarBuilder _listenerBuilder;
         private Grammar _listenerGrammar;
-        private System.Windows.Forms.NotifyIcon notifyIcon;
+        private NotifyIcon notifyIcon;
+        private ConfigurationInterpreter _configurationInterpreter;
         public SpeechSynthesizer synthesizer = new SpeechSynthesizer();
         public SpeechRecognitionEngine listener = new SpeechRecognitionEngine();
         public DispatcherTimer dispatcherTimer = new DispatcherTimer();
@@ -95,6 +98,11 @@ namespace speech_to_binding
 
             InitializeComponent();
 
+            byte[] bufferConfig = Properties.Resources.sample_config;
+            string config = Encoding.UTF8.GetString(bufferConfig, 0, bufferConfig.Length);
+            this._configurationInterpreter = new ConfigurationInterpreter(config);
+            string[] additionnalChoices = this._configurationInterpreter.GetConfiguration().match.Select(x => x.phrase).ToArray();
+
             string[] commands = File.ReadAllLines(@"commands.txt");
             foreach (string command in commands)
             {
@@ -108,10 +116,12 @@ namespace speech_to_binding
             this.dispatcherTimer.Start();
 
             this._recognizerChoices = new Choices(File.ReadAllLines(@"commands.txt"));
+            this._recognizerChoices.Add(additionnalChoices);
             this._recognizerBuilder = new GrammarBuilder(this._recognizerChoices);
             this._recognizerGrammar = new Grammar(this._recognizerBuilder);
 
             this._listenerChoices = new Choices(File.ReadAllLines(@"commands.txt"));
+            this._listenerChoices.Add(additionnalChoices);
             this._listenerBuilder = new GrammarBuilder(this._listenerChoices);
             this._listenerGrammar = new Grammar(this._listenerBuilder);
 
@@ -292,6 +302,36 @@ namespace speech_to_binding
             {
                 this.synthesizer.SpeakAsync("Normal");
                 this.WindowState = WindowState.Normal;
+            }
+
+            Configuration config = this._configurationInterpreter.GetConfiguration();
+            ConfigurationMatch match = config.match.Find(x => x.phrase.Contains(sentence));
+
+            if (match != null)
+            {
+                Console.WriteLine("match !");
+                Console.WriteLine(match);
+                foreach (ConfigurationMatchAction action in match.actions)
+                {
+                    switch (action.type)
+                    {
+                        case ActionType.SPEAK:
+                            Console.WriteLine(action);
+                            if (action.is_async)
+                            {
+                                this.synthesizer.SpeakAsync(action.message);
+                            }
+                            this.synthesizer.Speak(action.message);
+                            break;
+                        default:
+                            break;
+                    }
+                }
+            }
+            else
+            {
+                Console.WriteLine("sentence :");
+                Console.WriteLine(sentence);
             }
         }
     }
