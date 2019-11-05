@@ -6,7 +6,8 @@
         xmlns:local="clr-namespace:speech_to_binding"
         mc:Ignorable="d"
         Background="#2D2D30"
-        Title="Assistant" Height="450" Width="800">
+        Title="Assistant" Height="450" Width="800"
+         Icon="Resources/plainCircle.ico">
     <Grid x:Name="mainGrid">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*" />

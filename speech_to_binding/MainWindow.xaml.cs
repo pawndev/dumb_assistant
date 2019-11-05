@@ -16,8 +16,10 @@ using System.Speech.Recognition;
 using System.Speech.Synthesis;
 using System.Speech.AudioFormat;
 using System.IO;
+using System.Windows.Forms;
 using System.Windows.Threading;
 using System.Globalization;
+using System.Drawing;
 
 namespace speech_to_binding
 {
@@ -33,18 +35,23 @@ namespace speech_to_binding
         private Choices _listenerChoices;
         private GrammarBuilder _listenerBuilder;
         private Grammar _listenerGrammar;
+        private System.Windows.Forms.NotifyIcon notifyIcon;
         public SpeechSynthesizer synthesizer = new SpeechSynthesizer();
         public SpeechRecognitionEngine listener = new SpeechRecognitionEngine();
-        public DispatcherTimer dispatcherTimer = new System.Windows.Threading.DispatcherTimer();
+        public DispatcherTimer dispatcherTimer = new DispatcherTimer();
         public int recordTimeOut = 0;
         public DateTime now = DateTime.Now;
         private Random _rnd = new Random();
         public List<string> commandListItems = new List<string>();
         public List<GridLength> originalColumnSize = new List<GridLength>();
+        public Uri plainIconUri = new Uri("pack://application:,,,/speech_to_binding;component/Resources/baseCircle.ico", UriKind.Absolute);
+        public Uri baseIconUri = new Uri("pack://application:,,,/speech_to_binding;component/Resources/plainCircle.ico", UriKind.Absolute);
+        public ImageSource plainIcon = new BitmapImage(new Uri("pack://application:,,,/speech_to_binding;component/Resources/baseCircle.ico", UriKind.Absolute));
+        public ImageSource baseIcon  = new BitmapImage(new Uri("pack://application:,,,/speech_to_binding;component/Resources/plainCircle.ico", UriKind.Absolute));
 
         public MainWindow()
         {
-            /* using (SpeechSynthesizer synth = new SpeechSynthesizer())
+            using (SpeechSynthesizer synth = new SpeechSynthesizer())
             {
 
                 // Output information about all of the installed voices.   
@@ -84,7 +91,7 @@ namespace speech_to_binding
                     Console.WriteLine(" Additional Info - " + AdditionalInfo);
                     Console.WriteLine();
                 }
-            } */
+            }
 
             InitializeComponent();
 
@@ -126,9 +133,37 @@ namespace speech_to_binding
             {
                 this.originalColumnSize.Add(col.Width);
             }
+            
+            this.notifyIcon = new NotifyIcon();
+            this.notifyIcon.Icon = Properties.Resources.icon; // new Icon(System.Windows.Application.GetResourceStream(this.baseIconUri).Stream);
+            this.notifyIcon.MouseDoubleClick +=
+                new System.Windows.Forms.MouseEventHandler
+                    (NotifyIcon_MouseDoubleClick);
 
             // or this
             // synthesizer.SelectVoiceByHints(VoiceGender.Neutral, VoiceAge.NotSet, 0, CultureInfo.GetCultureInfo("en-us"));
+        }
+
+        private void NotifyIcon_MouseDoubleClick(object sender, System.Windows.Forms.MouseEventArgs e)
+        {
+            this.WindowState = WindowState.Normal;
+        }
+
+        private void Window_StateChanged(object sender, EventArgs e)
+        {
+            if (this.WindowState == WindowState.Minimized)
+            {
+                this.ShowInTaskbar = false;
+                this.notifyIcon.BalloonTipTitle = "Minimize Sucessful";
+                this.notifyIcon.BalloonTipText = "Minimized the app ";
+                this.notifyIcon.ShowBalloonTip(400);
+                this.notifyIcon.Visible = true;
+            }
+            else if (this.WindowState == WindowState.Normal)
+            {
+                this.notifyIcon.Visible = false;
+                this.ShowInTaskbar = true;
+            }
         }
 
         public void dispatcherTimer_Tick(object sender, EventArgs e)
@@ -160,10 +195,14 @@ namespace speech_to_binding
         public void _recognizer_SpeechRecognized(object sender, SpeechDetectedEventArgs e)
         {
             this.recordTimeOut = 0;
+            this.Icon = this.plainIcon;
+            this.notifyIcon.Icon = new Icon(System.Windows.Application.GetResourceStream(this.plainIconUri).Stream);
         }
 
         private void Default_SpeechRecognized(object sender, SpeechRecognizedEventArgs e)
         {
+            this.Icon = this.baseIcon;
+            this.notifyIcon.Icon = new Icon(System.Windows.Application.GetResourceStream(this.baseIconUri).Stream);
             string sentence = e.Result.Text;
             this.lastCommand.Text = sentence;
             int rnd;
@@ -234,7 +273,25 @@ namespace speech_to_binding
             if (sentence == "Kill yourself")
             {
                 this.synthesizer.Speak("Good bye");
-                Application.Current.Shutdown();
+                System.Windows.Application.Current.Shutdown();
+            }
+
+            if (sentence == "Minimize window")
+            {
+                this.synthesizer.SpeakAsync("Minimized");
+                this.WindowState = WindowState.Minimized;
+            }
+
+            if (sentence == "Maximize window")
+            {
+                this.synthesizer.SpeakAsync("Maximized");
+                this.WindowState = WindowState.Maximized;
+            }
+
+            if (sentence == "Normal window")
+            {
+                this.synthesizer.SpeakAsync("Normal");
+                this.WindowState = WindowState.Normal;
             }
         }
     }
