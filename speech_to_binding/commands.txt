@@ -4,8 +4,6 @@ Wake up
 Show Commands
 Unshow Commands
 Stop listening
-Stop talking
-Test
 Kill yourself
 Minimize window
 Maximize window

@@ -13,11 +13,10 @@ namespace speech_to_binding.Services
         public string configurationPath;
         private Configuration _configuration;
 
-        public ConfigurationInterpreter(string configurationPath)
+        public ConfigurationInterpreter(string configStr)
         {
-            this.configurationPath = configurationPath;
-            this._configuration = Toml.ReadString<Configuration>(configurationPath);
-            Console.WriteLine(this._configuration);
+            this.configurationPath = configStr;
+            this._configuration = Toml.ReadString<Configuration>(configStr);
         }
 
         public Configuration GetConfiguration()

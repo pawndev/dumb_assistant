@@ -15,7 +15,7 @@
             <ColumnDefinition Width="*" />
         </Grid.ColumnDefinitions>
         <TextBlock Grid.Column="0" Name="lastCommand" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="34">
-            Hello, WPF!
+            Hello, boulou!
         </TextBlock>
         <GridSplitter Grid.Column="1" Width="5" HorizontalAlignment="Stretch" Name="splitter" ResizeBehavior="PreviousAndNext"/>
         <ListBox Background="#1E1E1E" Name="commandList" Grid.Column="2" Foreground="#FFEAE8E8" />

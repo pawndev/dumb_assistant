@@ -6,11 +6,12 @@ using System.Threading.Tasks;
 
 namespace speech_to_binding.Models
 {
-    enum ActionType
+    public enum ActionType
     {
-        SPEAK
+        SPEAK,
+        CALL_METHOD
     }
-    class Configuration
+    public class Configuration
     {
         public string title { get; set; }
         public List<ConfigurationMatch> match { get; set; }
@@ -22,7 +23,7 @@ namespace speech_to_binding.Models
         }
     }
 
-    class ConfigurationMatch
+    public class ConfigurationMatch
     {
         public string name { get; set; }
         public string description { get; set; }
@@ -36,12 +37,16 @@ namespace speech_to_binding.Models
         }
     }
 
-    class ConfigurationMatchAction
+    public class ConfigurationMatchAction
     {
         public string description { get; set; }
         public bool is_async { get; set; }
         public ActionType type { get; set; }
         public string message { get; set; }
+
+        public string function { get; set; }
+
+        public string context { get; set; }
 
         public override string ToString()
         {

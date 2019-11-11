@@ -1,0 +1,38 @@
+﻿title = "Sample configuration"
+
+[[match]]
+  name = "Test_Command"
+  description = "Command that said a long phrase"
+  phrase = "Test"
+  [[match.actions]]
+    description = ""
+    is_async = false
+    type = "SPEAK"
+    message = "She had said I’m tired of begging God to overthrow my son, because all this business of living in the presidential palace is like having the lights on all the time, sir, and she had said it with the same naturalness with which on one national holiday she had made her way through the guard of honor with a basket of empty bottles and reached the presidential limousine that was leading the parade of celebration in an uproar of ovations and martial music and storms of flowers and she shoved the basket through the window and shouted to her son that since you’ll be passing right by take advantage and return these bottles to the store on the corner, poor mother."
+
+[[match]]
+  name = "Stop_Talking"
+  description = "Command to order Alice to stop talking"
+  phrase = "Stop talking"
+  [[match.actions]]
+    description = "Stop the current synthetizer phrase."
+    type = "CALL_METHOD"
+    context = "synthesizer"
+    function = "SpeakAsyncCancelAll"
+  [[match.actions]]
+    description = "Say a random affirmation phrase"
+    type = "SPEAK"
+    function = "{{alice.random_affirmation}}"
+
+# [[match]]
+#   name = "Stop_Listening"
+#   description = "Command to order Alice to stop talking"
+#   phrase = "Stop talking"
+#   [[match.actions]]
+#     description = "Stop the current synthetizer phrase."
+#     type = "CALL_METHOD"
+#     function = "CANCEL_SPEAKING"
+#   [[match.actions]]
+#     description = "Say a random affirmation phrase"
+#     type = "SPEAK"
+#     function = "{{alice.random_affirmation}}"

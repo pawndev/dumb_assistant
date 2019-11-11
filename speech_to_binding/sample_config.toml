@@ -1,7 +1,3 @@
-#
-# action is an object that can differ 
-#
-
 title = "Sample configuration"
 
 [[match]]
