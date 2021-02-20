@@ -81,6 +81,16 @@ namespace speech_to_binding.Properties {
         }
         
         /// <summary>
+        ///   Recherche une ressource localisée de type System.Byte[].
+        /// </summary>
+        public static byte[] default_command {
+            get {
+                object obj = ResourceManager.GetObject("default_command", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
         ///   Recherche une ressource localisée de type System.Drawing.Icon semblable à (Icône).
         /// </summary>
         public static System.Drawing.Icon icon {
@@ -97,6 +107,16 @@ namespace speech_to_binding.Properties {
             get {
                 object obj = ResourceManager.GetObject("plainCircle", resourceCulture);
                 return ((System.Drawing.Icon)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une ressource localisée de type System.Byte[].
+        /// </summary>
+        public static byte[] sample_config {
+            get {
+                object obj = ResourceManager.GetObject("sample_config", resourceCulture);
+                return ((byte[])(obj));
             }
         }
     }

@@ -1,0 +1,21 @@
+title = "Sample configuration"
+
+[[match]]
+  name = "Sample_Name"
+  description = "Just a description if you want about this match"
+  phrase = "Sample test"
+  [[match.actions]]
+    description = "Just a simple description about the action"
+    is_async = false
+    type = "SPEAK"
+    message = "Hello my lord"
+
+  [[match.actions]]
+    description = "Another simple description"
+    is_async = false
+    type = "SPEAK"
+    message = """
+    Howdy.
+    You just need to ask me something to do.
+    But, only something that I can understand
+    """

@@ -2939,6 +2939,9 @@
         AACAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgAEAAIABAADAAwAA4AcAAPgfAAA=
 </value>
   </data>
+  <data name="default_command" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\default_command.toml;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
   <data name="icon" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\icon.ico;System.Drawing.Icon, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
@@ -5828,5 +5831,8 @@
         AAAAAAAAJyEbFT41LFdIPTJ5SD0yeT81LFcoIhwVAAAAAAAAAAAAAAAAAAAAAAAAAAD4HwAA4AcAAMAD
         AACAAQAAgAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAIABAACAAQAAwAMAAOAHAAD4HwAA
 </value>
+  </data>
+  <data name="sample_config" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\sample_config.toml;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
 </root>
